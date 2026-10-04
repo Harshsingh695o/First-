@@ -1,12 +1,14 @@
-name: Build Android APK
+name: Generate Gradle Wrapper
 
 on:
   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+permissions:
+  contents: write
 
+jobs:
+  generate:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -17,15 +19,19 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Grant Execute Permission to Gradlew
-        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon
+      - name: Generate Wrapper Files
+        run: |
+          cd First--main
+          gradle wrapper
+          chmod +x gradlew
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
-          
+      - name: Commit Wrapper Files to Repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add First--main/gradlew First--main/gradle/wrapper/gradle-wrapper.jar
+          git commit -m "Add official gradlew and gradle-wrapper.jar" || echo "No changes to commit"
+          git push
