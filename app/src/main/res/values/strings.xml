@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LuminaMotion</string>
+    <string name="wallpaper_service_label">LuminaMotion Live Video</string>
+    <string name="wallpaper_description">Dynamic MP4 video wallpaper with customizable interactive elements</string>
+</resources>

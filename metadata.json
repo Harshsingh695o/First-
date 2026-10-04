@@ -1,0 +1,6 @@
+{
+  "name": "LuminaMotion",
+  "description": "Customize your home and lock screen layout with dynamic MP4 video wallpapers and interactive touch elements.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
